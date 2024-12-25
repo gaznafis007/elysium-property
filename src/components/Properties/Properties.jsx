@@ -9,6 +9,7 @@ const Properties = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
   useEffect(() => {
     const getProperties = async () => {
@@ -45,7 +46,8 @@ const Properties = () => {
     const storeAllProperties = JSON.stringify(newAllProperties);
     localStorage.removeItem("properties");
     localStorage.setItem("properties", storeAllProperties);
-    console.log(JSON.parse(localStorage.getItem("properties")));
+    // console.log(JSON.parse(localStorage.getItem("properties")));
+    reset();
   };
   return (
     <section className="mt-6">
