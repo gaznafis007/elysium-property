@@ -1,6 +1,5 @@
 "use client";
 import { fetchData } from "@/utils/fetchData";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -30,6 +29,11 @@ const Properties = () => {
       getProperties();
     }
   }, []);
+  const filterProperty = async (option) =>{
+    const storedProperties = JSON.parse(localStorage.getItem('properties'))
+    const filteredProperties = storedProperties.filter(property => property.status == option);
+    setProperties(filteredProperties);
+  }
   const handleAddProperties = (data) => {
     const newProperty = {
       id: `prop${properties.length + 1}`,
@@ -45,8 +49,12 @@ const Properties = () => {
   };
   return (
     <section className="mt-6">
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row justify-between">
             <h2 className="text-3xl font-semibold text-purple-800">Filter your properties</h2>
+            <div className="flex flex-row space-x-4">
+                <button onClick={() => filterProperty('available')} className="border border-purple-800 hover:border-0 text-purple-800 hover:text-white font-semibold hover:bg-purple-800 px-4 py-3 rounded-md">Available</button>
+                <button onClick={() => filterProperty('rented')} className="border border-purple-800 hover:border-0 text-purple-800 hover:text-white font-semibold hover:bg-purple-800 px-4 py-3 rounded-md">Rented</button>
+            </div>
         </div>
       <div className="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 justify-between">
         <div className="w-full md:w-1/2">
@@ -141,6 +149,8 @@ const Properties = () => {
             All Properties : {properties.length}
           </h2>
           <div className="border border-purple-800 p-2 rounded-md overflow-auto mt-4">
+          {
+            properties?.length > 0 ?
             <div className="grid grid-cols-1 gap-3">
               {properties.map((property) => (
                 <div
@@ -179,7 +189,8 @@ const Properties = () => {
                   </div>
                 </div>
               ))}
-            </div>
+            </div> : <h2 className="text-center font-semibold text-slate-800">No properties yet please add</h2>
+          }
           </div>
         </div>
       </div>
