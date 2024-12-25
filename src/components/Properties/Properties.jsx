@@ -129,7 +129,7 @@ const Properties = () => {
             </div>
             <div className="flex flex-col space-y-2 mt-2">
               <label className="text-xl font-semibold text-slate-800">
-                Property Name
+                Rental Status
               </label>
               <select
                 {...register("status")}
